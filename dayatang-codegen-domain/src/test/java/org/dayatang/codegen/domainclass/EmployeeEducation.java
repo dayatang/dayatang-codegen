@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dayatang.codegen.domain;
+package org.dayatang.codegen.domainclass;
 
 import java.util.Date;
 import javax.persistence.Embeddable;
