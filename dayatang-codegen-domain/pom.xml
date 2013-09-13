@@ -39,10 +39,8 @@
     </dependency>
     <dependency>
       <groupId>com.dayatang.commons</groupId>
-      <artifactId>dayatang-commons-utils</artifactId>
+      <artifactId>dayatang-commons-domain</artifactId>
       <version>3.6</version>
-      <scope>test</scope>
-      <type>jar</type>
     </dependency>
   </dependencies>
 </project>

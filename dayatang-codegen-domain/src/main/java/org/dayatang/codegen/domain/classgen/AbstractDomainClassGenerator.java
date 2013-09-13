@@ -20,11 +20,10 @@ import org.dayatang.codegen.domain.DomainClassGenerator;
  * @author yyang
  */
 public abstract class AbstractDomainClassGenerator implements DomainClassGenerator {
-
     protected File file;
     protected CompilationUnit compilationUnit;
     protected TypeDeclaration type;
-
+    
     @Override
     public void process(File file) {
         this.file = file;

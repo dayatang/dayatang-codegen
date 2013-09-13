@@ -12,8 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-import com.dayatang.utils.DateUtils;
-
 /**
  * 当事人
  * @author yyang
@@ -35,5 +33,5 @@ public abstract class Party extends AbstractEntity {
 	private Date createDate = new Date();
 
 	// 终结日期
-	private Date terminateDate = DateUtils.MAX_DATE;
+	private Date terminateDate;
 }

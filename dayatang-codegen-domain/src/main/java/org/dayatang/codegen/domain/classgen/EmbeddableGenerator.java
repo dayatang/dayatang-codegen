@@ -9,5 +9,4 @@ package org.dayatang.codegen.domain.classgen;
  * @author yyang
  */
 public class EmbeddableGenerator extends AbstractDomainClassGenerator {
-    
 }

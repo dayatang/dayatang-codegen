@@ -20,7 +20,7 @@ import org.dayatang.codegen.domain.DomainClassGeneratorFactory;
  *
  * @author yyang
  */
-public class DomainClassGeneratorFactoryImpl extends DomainClassGeneratorFactory {
+public class DomainClassGeneratorFactoryImpl implements DomainClassGeneratorFactory {
 
     public DomainClassGenerator getGenerator(File file) {
         CompilationUnit cu;

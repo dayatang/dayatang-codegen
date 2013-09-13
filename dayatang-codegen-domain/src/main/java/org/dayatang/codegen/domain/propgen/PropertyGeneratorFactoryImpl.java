@@ -13,7 +13,7 @@ import org.dayatang.codegen.domain.classgen.PropertyGeneratorFactory;
  *
  * @author yyang
  */
-public class PropertyGeneratorFactoryImpl extends PropertyGeneratorFactory {
+public class PropertyGeneratorFactoryImpl implements PropertyGeneratorFactory {
 
     public PropertyGenerator getGenerator(FieldDeclaration field) {
         Type type = field.getType();

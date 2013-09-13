@@ -5,20 +5,13 @@
 package org.dayatang.codegen.domain.classgen;
 
 import japa.parser.ast.body.FieldDeclaration;
-import java.util.ServiceLoader;
 
 /**
  *
  * @author yyang
  */
-public abstract class PropertyGeneratorFactory {
-    
-    public static PropertyGeneratorFactory getInstance() {
-        return ServiceLoader.load(PropertyGeneratorFactory.class).iterator().next();
-    }
+public interface PropertyGeneratorFactory {
 
-    public PropertyGenerator getGenerator(FieldDeclaration field) {
-        return getInstance().getGenerator(field);
-    }
+    PropertyGenerator getGenerator(FieldDeclaration field);
     
 }
