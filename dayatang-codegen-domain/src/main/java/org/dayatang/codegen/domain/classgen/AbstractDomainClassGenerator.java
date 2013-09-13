@@ -11,8 +11,6 @@ import japa.parser.ast.body.TypeDeclaration;
 import japa.parser.ast.visitor.VoidVisitorAdapter;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.dayatang.codegen.domain.DomainClassGenerator;
 
 /**

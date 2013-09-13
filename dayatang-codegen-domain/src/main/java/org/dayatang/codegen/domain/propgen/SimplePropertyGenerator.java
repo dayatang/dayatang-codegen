@@ -4,24 +4,18 @@
  */
 package org.dayatang.codegen.domain.propgen;
 
-import org.dayatang.codegen.domain.classgen.*;
 import japa.parser.ast.body.FieldDeclaration;
 import japa.parser.ast.body.MethodDeclaration;
 import java.util.List;
+import org.dayatang.codegen.domain.classgen.PropertyGenerator;
 
 /**
  *
  * @author yyang
  */
-public abstract class AbstractPropertyGenerator {
-    
-    protected FieldDeclaration field;
-    
-    public AbstractPropertyGenerator(FieldDeclaration field) {
-        this.field = field;
-    }
+public class SimplePropertyGenerator implements PropertyGenerator {
 
-    public List<MethodDeclaration> generateAccessors() {
+    public List<MethodDeclaration> generateAccessors(FieldDeclaration field) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
