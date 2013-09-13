@@ -12,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-import com.dayatang.domain.AbstractEntity;
 import com.dayatang.utils.DateUtils;
 
 /**
