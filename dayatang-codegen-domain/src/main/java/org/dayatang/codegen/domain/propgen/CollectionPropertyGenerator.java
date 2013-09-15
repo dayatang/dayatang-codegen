@@ -52,7 +52,7 @@ public abstract class CollectionPropertyGenerator implements PropertyGenerator {
 		String methodName = "add" + CodeGenUtils.upperFirstLetter(fieldName);
 		MethodDeclaration result = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, methodName);
 		String argName = Inflector.getInstance().singularize(fieldName);
-		Parameter parameter = ASTHelper.createParameter(new ClassOrInterfaceType(CodeGenUtils.getCollectionElementType(fieldName)), argName);
+		Parameter parameter = ASTHelper.createParameter(new ClassOrInterfaceType(CodeGenUtils.getCollectionElementType(field.getType().toString())), argName);
 		result.setParameters(Arrays.asList(parameter));
 
 		FieldAccessExpr fieldAccessExpr = new FieldAccessExpr(new ThisExpr(), fieldName);
@@ -69,7 +69,7 @@ public abstract class CollectionPropertyGenerator implements PropertyGenerator {
 		String methodName = "remove" + CodeGenUtils.upperFirstLetter(fieldName);
 		MethodDeclaration result = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, methodName);
 		String argName = Inflector.getInstance().singularize(fieldName);
-		Parameter parameter = ASTHelper.createParameter(new ClassOrInterfaceType(CodeGenUtils.getCollectionElementType(fieldName)), argName);
+		Parameter parameter = ASTHelper.createParameter(new ClassOrInterfaceType(CodeGenUtils.getCollectionElementType(field.getType().toString())), argName);
 		result.setParameters(Arrays.asList(parameter));
 
 		FieldAccessExpr fieldAccessExpr = new FieldAccessExpr(new ThisExpr(), fieldName);
