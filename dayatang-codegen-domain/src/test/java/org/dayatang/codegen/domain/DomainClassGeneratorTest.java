@@ -50,9 +50,9 @@ public class DomainClassGeneratorTest {
     
     @Test
     public void test() throws Exception {
-        String path = toPath("org.dayatang.codegen.domain.Employee");
+        String path = toPath("org.dayatang.codegen.domainclass", "Employee.java");
         System.out.println(path);
-        String absolutePath = getClass().getResource(path).getFile();
+        String absolutePath = new File("src/test/java", path).getAbsolutePath();
         System.out.println(absolutePath);
         DomainClassGeneratorFactory factory = InstanceFactory.getInstance(DomainClassGeneratorFactory.class);
         DomainClassGenerator generator = factory.getGenerator(new File(absolutePath));
@@ -64,7 +64,7 @@ public class DomainClassGeneratorTest {
     // @Test
     // public void hello() {}
 
-    private String toPath(String className) {
-        return StringUtils.replace(className, ".", File.separator);
+    private String toPath(String pkg, String className) {
+        return StringUtils.replace(pkg, ".", "/") + "/" + className;
     }
 }

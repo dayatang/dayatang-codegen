@@ -4,14 +4,23 @@
  */
 package org.dayatang.codegen.domain.classgen;
 
+import japa.parser.ASTHelper;
 import japa.parser.JavaParser;
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
+import japa.parser.ast.body.BodyDeclaration;
+import japa.parser.ast.body.FieldDeclaration;
+import japa.parser.ast.body.MethodDeclaration;
 import japa.parser.ast.body.TypeDeclaration;
-import japa.parser.ast.visitor.VoidVisitorAdapter;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dayatang.codegen.domain.DomainClassGenerator;
+
+import com.dayatang.domain.InstanceFactory;
 
 /**
  *
@@ -22,7 +31,19 @@ public abstract class AbstractDomainClassGenerator implements DomainClassGenerat
     protected CompilationUnit compilationUnit;
     protected TypeDeclaration type;
     
-    @Override
+    private PropertyGeneratorFactory propertyGeneratorFactory;
+    
+    public PropertyGeneratorFactory getPropertyGeneratorFactory() {
+        if (propertyGeneratorFactory == null) {
+            propertyGeneratorFactory = InstanceFactory.getInstance(PropertyGeneratorFactory.class);
+        }
+        return propertyGeneratorFactory;
+    }
+    
+    public void setPropertyGeneratorFactory(PropertyGeneratorFactory propertyGeneratorFactory) {
+        this.propertyGeneratorFactory = propertyGeneratorFactory;
+    }
+    
     public void process(File file) {
         this.file = file;
         compilationUnit = createCompilationUnit(file);
@@ -42,9 +63,23 @@ public abstract class AbstractDomainClassGenerator implements DomainClassGenerat
     }
 
     private void generateAccessors() {
-        VoidVisitorAdapter visitor = new FieldVisitorAdapter();
-        visitor.visit(compilationUnit, type);
+    	for (FieldDeclaration field : getFields()) {
+            PropertyGenerator propertyGenerator = getPropertyGeneratorFactory().getGenerator(field);
+            for (MethodDeclaration method : propertyGenerator.generateAccessors(field)) {
+                ASTHelper.addMember((TypeDeclaration) type, method);
+            }
+    	}
     }
+
+	private List<FieldDeclaration> getFields() {
+		List<FieldDeclaration> results = new ArrayList<FieldDeclaration>();
+		for (BodyDeclaration member : type.getMembers()) {
+			if (member instanceof FieldDeclaration) {
+				results.add((FieldDeclaration) member);
+			}
+		}
+		return results;
+	}
 
 
 }
