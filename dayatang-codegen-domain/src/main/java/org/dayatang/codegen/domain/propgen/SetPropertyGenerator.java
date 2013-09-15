@@ -1,7 +1,4 @@
 package org.dayatang.codegen.domain.propgen;
-
-
-
 public class SetPropertyGenerator extends CollectionPropertyGenerator {
 
 	@Override
