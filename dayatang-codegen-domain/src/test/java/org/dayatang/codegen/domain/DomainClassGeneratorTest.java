@@ -5,8 +5,6 @@
 package org.dayatang.codegen.domain;
 
 import com.dayatang.domain.InstanceFactory;
-import japa.parser.JavaParser;
-import japa.parser.ast.CompilationUnit;
 import java.io.File;
 import org.apache.commons.lang3.StringUtils;
 import org.dayatang.codegen.domain.classgen.DomainClassGeneratorFactoryImpl;
@@ -24,8 +22,6 @@ import static org.junit.Assert.*;
  * @author yyang
  */
 public class DomainClassGeneratorTest {
-    
-    private String domainClass = "org.dayatang.codegen.domain.Employee";
     
     public DomainClassGeneratorTest() {
     }
