@@ -29,7 +29,6 @@ public class MapPropertyGenerator implements PropertyGenerator {
 	}
 
 	private MethodDeclaration generateRemoveElementMethod(FieldDeclaration field) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
