@@ -24,6 +24,7 @@ import javax.persistence.MapKeyEnumerated;
 
 /**
  * 员工
+ * 
  * @author yyang
  */
 @Entity
@@ -32,29 +33,43 @@ public class Employee extends Party {
 
 	private static final long serialVersionUID = -7339118476080239701L;
 
-        //姓名
+	/**
+	 * 姓名
+	 */
 	private String name;
 
-        //身份证号码
+	/**
+	 * 身份证号码
+	 */
 	private String idNumber;
-        
-        //已失效
-        private boolean disabled = false;
-        
-        //出生日期
-        private Date birthday;
-        
-        //教育情况
-        @ElementCollection
+
+	/**
+	 * 已失效
+	 */
+	private Boolean disabled = false;
+
+	/**
+	 * 出生日期
+	 */
+	private Date birthday;
+
+	/**
+	 * 教育情况
+	 */
+	@ElementCollection
 	@CollectionTable(name = "person_educations", joinColumns = @JoinColumn(name = "person_id"))
-        private List<EmployeeEducation> educations = new ArrayList<EmployeeEducation>();
-	
-        //电子邮箱
+	private List<EmployeeEducation> educations = new ArrayList<EmployeeEducation>();
+
+	/**
+	 * 电子邮箱
+	 */
 	@ElementCollection
 	@CollectionTable(name = "person_emails", joinColumns = @JoinColumn(name = "person_id"))
 	private Set<String> emails = new HashSet<String>();
-	
-        //即时通信
+
+	/**
+	 * 即时通信
+	 */
 	@ElementCollection
 	@CollectionTable(name = "person_ims", joinColumns = @JoinColumn(name = "person_id"))
 	@MapKeyColumn(name = "im_type")
@@ -62,18 +77,45 @@ public class Employee extends Party {
 	@Column(name = "im_address")
 	private Map<ImType, String> ims = new HashMap<ImType, String>();
 
-    @Override
-    public int hashCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	@Override
+	public int hashCode() {
+		throw new UnsupportedOperationException("Not supported yet."); // To
+																		// change
+																		// body
+																		// of
+																		// generated
+																		// methods,
+																		// choose
+																		// Tools
+																		// |
+																		// Templates.
+	}
 
-    @Override
-    public boolean equals(Object other) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	@Override
+	public boolean equals(Object other) {
+		throw new UnsupportedOperationException("Not supported yet."); // To
+																		// change
+																		// body
+																		// of
+																		// generated
+																		// methods,
+																		// choose
+																		// Tools
+																		// |
+																		// Templates.
+	}
 
-    @Override
-    public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	@Override
+	public String toString() {
+		throw new UnsupportedOperationException("Not supported yet."); // To
+																		// change
+																		// body
+																		// of
+																		// generated
+																		// methods,
+																		// choose
+																		// Tools
+																		// |
+																		// Templates.
+	}
 }
