@@ -32,6 +32,7 @@ public abstract class CollectionPropertyGenerator implements PropertyGenerator {
     	results.add(generateGetter(field));
     	results.add(generateAddElementMethod(field));
     	results.add(generateRemoveElementMethod(field));
+    	results.add(generateClearMethod(field));
     	return results;
 	}
 
@@ -73,6 +74,17 @@ public abstract class CollectionPropertyGenerator implements PropertyGenerator {
 
 		Expression args = new NameExpr(argName);
 		MethodCallExpr callExpr = new MethodCallExpr(new NameExpr(fieldName), "remove", Arrays.asList(args));
+		Statement es = new ExpressionStmt(callExpr);
+		BlockStmt setterBlockStmt = new BlockStmt(Arrays.asList(es));
+		result.setBody(setterBlockStmt);
+		return result;
+	}
+
+	private MethodDeclaration generateClearMethod(FieldDeclaration field) {
+		String fieldName = field.getVariables().get(0).getId().getName();
+		String methodName = "clear" + CodeGenUtils.upperFirstLetter(fieldName);
+		MethodDeclaration result = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, methodName);
+		MethodCallExpr callExpr = new MethodCallExpr(new NameExpr(fieldName), "clear");
 		Statement es = new ExpressionStmt(callExpr);
 		BlockStmt setterBlockStmt = new BlockStmt(Arrays.asList(es));
 		result.setBody(setterBlockStmt);
