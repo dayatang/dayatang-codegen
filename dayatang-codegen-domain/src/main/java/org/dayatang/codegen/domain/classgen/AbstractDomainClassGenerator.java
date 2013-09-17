@@ -11,6 +11,7 @@ import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.body.BodyDeclaration;
 import japa.parser.ast.body.FieldDeclaration;
 import japa.parser.ast.body.MethodDeclaration;
+import japa.parser.ast.body.ModifierSet;
 import japa.parser.ast.body.TypeDeclaration;
 
 import java.io.File;
@@ -49,6 +50,8 @@ public abstract class AbstractDomainClassGenerator implements DomainClassGenerat
         compilationUnit = createCompilationUnit(file);
         type = compilationUnit.getTypes().get(0);
         generateAccessors();
+        System.out.println(compilationUnit.toString());
+        
 
     }
 
@@ -74,7 +77,7 @@ public abstract class AbstractDomainClassGenerator implements DomainClassGenerat
 	private List<FieldDeclaration> getFields() {
 		List<FieldDeclaration> results = new ArrayList<FieldDeclaration>();
 		for (BodyDeclaration member : type.getMembers()) {
-			if (member instanceof FieldDeclaration) {
+			if (member instanceof FieldDeclaration && !ModifierSet.isStatic(((FieldDeclaration) member).getModifiers())) {
 				results.add((FieldDeclaration) member);
 			}
 		}

@@ -25,13 +25,13 @@ import org.dayatang.codegen.domain.classgen.PropertyGenerator;
 import org.dayatang.codegen.tools.CodeGenUtils;
 import org.dayatang.codegen.tools.Inflector;
 
-public abstract class CollectionPropertyGenerator implements PropertyGenerator {
+public abstract class AbstractMapPropertyGenerator implements PropertyGenerator {
 
 	public List<MethodDeclaration> generateAccessors(FieldDeclaration field) {
     	List<MethodDeclaration> results = new ArrayList<MethodDeclaration>();
     	results.add(generateGetter(field));
-    	results.add(generateAddElementMethod(field));
-    	results.add(generateRemoveElementMethod(field));
+    	results.add(generateSetItemMethod(field));
+    	results.add(generateRemoveItemMethod(field));
     	return results;
 	}
 
@@ -47,31 +47,32 @@ public abstract class CollectionPropertyGenerator implements PropertyGenerator {
 		return result;
 	}
 
-	private MethodDeclaration generateAddElementMethod(FieldDeclaration field) {
+	private MethodDeclaration generateSetItemMethod(FieldDeclaration field) {
 		String fieldName = field.getVariables().get(0).getId().getName();
-		String methodName = "add" + CodeGenUtils.upperFirstLetter(fieldName);
-		MethodDeclaration result = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, methodName);
 		String argName = Inflector.getInstance().singularize(fieldName);
-		Parameter parameter = ASTHelper.createParameter(new ClassOrInterfaceType(CodeGenUtils.getCollectionElementType(field.getType().toString())), argName);
-		result.setParameters(Arrays.asList(parameter));
-
-		Expression args = new NameExpr(argName);
-		MethodCallExpr callExpr = new MethodCallExpr(new NameExpr(fieldName), "add", Arrays.asList(args));
+		String methodName = "set" + CodeGenUtils.upperFirstLetter(argName);
+		MethodDeclaration result = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, methodName);
+		List<Parameter> parameters = new ArrayList<Parameter>();
+		parameters.add(ASTHelper.createParameter(new ClassOrInterfaceType(CodeGenUtils.getMapKeyType(field.getType().toString())), "key"));
+		parameters.add(ASTHelper.createParameter(new ClassOrInterfaceType(CodeGenUtils.getMapValueType(field.getType().toString())), "value"));
+		result.setParameters(parameters);
+		Expression key = new NameExpr("key");
+		Expression value = new NameExpr("value");
+		MethodCallExpr callExpr = new MethodCallExpr(new NameExpr(fieldName), "put", Arrays.asList(key, value));
 		Statement es = new ExpressionStmt(callExpr);
 		BlockStmt setterBlockStmt = new BlockStmt(Arrays.asList(es));
 		result.setBody(setterBlockStmt);
 		return result;
 	}
 
-	private MethodDeclaration generateRemoveElementMethod(FieldDeclaration field) {
+	private MethodDeclaration generateRemoveItemMethod(FieldDeclaration field) {
 		String fieldName = field.getVariables().get(0).getId().getName();
-		String methodName = "remove" + CodeGenUtils.upperFirstLetter(fieldName);
-		MethodDeclaration result = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, methodName);
 		String argName = Inflector.getInstance().singularize(fieldName);
-		Parameter parameter = ASTHelper.createParameter(new ClassOrInterfaceType(CodeGenUtils.getCollectionElementType(field.getType().toString())), argName);
+		String methodName = "remove" + CodeGenUtils.upperFirstLetter(argName);
+		MethodDeclaration result = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, methodName);
+		Parameter parameter = ASTHelper.createParameter(new ClassOrInterfaceType(CodeGenUtils.getMapKeyType(field.getType().toString())), "key");
 		result.setParameters(Arrays.asList(parameter));
-
-		Expression args = new NameExpr(argName);
+		Expression args = new NameExpr("key");
 		MethodCallExpr callExpr = new MethodCallExpr(new NameExpr(fieldName), "remove", Arrays.asList(args));
 		Statement es = new ExpressionStmt(callExpr);
 		BlockStmt setterBlockStmt = new BlockStmt(Arrays.asList(es));
