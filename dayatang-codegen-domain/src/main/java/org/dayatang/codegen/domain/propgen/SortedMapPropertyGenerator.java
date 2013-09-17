@@ -1,17 +1,11 @@
 package org.dayatang.codegen.domain.propgen;
 
-import japa.parser.ast.body.FieldDeclaration;
-import japa.parser.ast.body.MethodDeclaration;
 
-import java.util.List;
+public class SortedMapPropertyGenerator extends AbstractMapPropertyGenerator {
 
-import org.dayatang.codegen.domain.classgen.PropertyGenerator;
-
-public class SortedMapPropertyGenerator implements PropertyGenerator {
-
-	public List<MethodDeclaration> generateAccessors(FieldDeclaration field) {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	protected String getUnmodifiableCloneMethodName() {
+		return "unmodifiableSortedMap";
 	}
 
 }

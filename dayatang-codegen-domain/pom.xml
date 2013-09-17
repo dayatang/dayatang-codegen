@@ -42,5 +42,10 @@
       <artifactId>dayatang-commons-domain</artifactId>
       <version>3.6</version>
     </dependency>
+    <dependency>
+    	<groupId>org.apache.commons</groupId>
+    	<artifactId>commons-io</artifactId>
+    	<version>1.3.2</version>
+    </dependency>
   </dependencies>
 </project>
