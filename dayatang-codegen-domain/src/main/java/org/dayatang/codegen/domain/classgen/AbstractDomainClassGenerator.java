@@ -55,7 +55,6 @@ public abstract class AbstractDomainClassGenerator implements DomainClassGenerat
         importClasses();
         generateAccessors();
         writeToFile(compilationUnit.toString(), file);
-
     }
 
 	private void importClasses() {
