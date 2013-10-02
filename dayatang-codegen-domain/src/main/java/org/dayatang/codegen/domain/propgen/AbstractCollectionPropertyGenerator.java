@@ -25,7 +25,7 @@ import org.dayatang.codegen.domain.classgen.PropertyGenerator;
 import org.dayatang.codegen.tools.CodeGenUtils;
 import org.dayatang.codegen.tools.Inflector;
 
-public abstract class CollectionPropertyGenerator implements PropertyGenerator {
+public abstract class AbstractCollectionPropertyGenerator implements PropertyGenerator {
 
 	public List<MethodDeclaration> generateAccessors(FieldDeclaration field) {
     	List<MethodDeclaration> results = new ArrayList<MethodDeclaration>();
