@@ -1,7 +1,7 @@
 package org.dayatang.codegen.domain.propgen;
 
 
-public class SortedSetPropertyGenerator extends CollectionPropertyGenerator {
+public class SortedSetPropertyGenerator extends AbstractCollectionPropertyGenerator {
 
 	@Override
 	protected String getUnmodifiableCloneMethodName() {

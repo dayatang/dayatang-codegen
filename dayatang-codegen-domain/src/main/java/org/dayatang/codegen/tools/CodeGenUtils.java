@@ -1,5 +1,9 @@
 package org.dayatang.codegen.tools;
 
+import japa.parser.ASTHelper;
+import japa.parser.ast.body.FieldDeclaration;
+import japa.parser.ast.type.Type;
+
 public class CodeGenUtils {
 
 	public static String upperFirstLetter(String value) {
@@ -25,5 +29,17 @@ public class CodeGenUtils {
 			throw new IllegalArgumentException("Type '" + str + "' is invalid");
 		}
 		return str.substring(start + 1, end).trim();
+	}
+
+	public static String getGetterMethodName(FieldDeclaration field) {
+		String fieldName = field.getVariables().get(0).getId().getName();
+		Type type = field.getType();
+		String prefix = type.equals(ASTHelper.BOOLEAN_TYPE) ? "is" : "get";
+		return prefix + upperFirstLetter(fieldName);
+	}
+
+	public static String getSetterMethodName(FieldDeclaration field) {
+		String fieldName = field.getVariables().get(0).getId().getName();
+		return "set" + upperFirstLetter(fieldName);
 	}
 }

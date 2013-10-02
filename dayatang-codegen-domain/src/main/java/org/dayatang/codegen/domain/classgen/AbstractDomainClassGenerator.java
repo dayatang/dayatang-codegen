@@ -27,58 +27,81 @@ import org.dayatang.codegen.domain.DomainClassGenerator;
 import com.dayatang.domain.InstanceFactory;
 
 /**
- *
+ * 
  * @author yyang
  */
 public abstract class AbstractDomainClassGenerator implements DomainClassGenerator {
-    //protected File file;
-    protected CompilationUnit compilationUnit;
-    protected TypeDeclaration type;
-    
-    private PropertyGeneratorFactory propertyGeneratorFactory;
-    
-    public PropertyGeneratorFactory getPropertyGeneratorFactory() {
-        if (propertyGeneratorFactory == null) {
-            propertyGeneratorFactory = InstanceFactory.getInstance(PropertyGeneratorFactory.class);
-        }
-        return propertyGeneratorFactory;
-    }
-    
-    public void setPropertyGeneratorFactory(PropertyGeneratorFactory propertyGeneratorFactory) {
-        this.propertyGeneratorFactory = propertyGeneratorFactory;
-    }
-    
-    public void process(File file) {
-        //this.file = file;
-        compilationUnit = createCompilationUnit(file);
-        type = compilationUnit.getTypes().get(0);
-        importClasses();
-        generateAccessors();
-        writeToFile(compilationUnit.toString(), file);
-    }
+	// protected File file;
+	protected CompilationUnit compilationUnit;
+	protected TypeDeclaration type;
+
+	private PropertyGeneratorFactory propertyGeneratorFactory;
+
+	public PropertyGeneratorFactory getPropertyGeneratorFactory() {
+		if (propertyGeneratorFactory == null) {
+			propertyGeneratorFactory = InstanceFactory.getInstance(PropertyGeneratorFactory.class);
+		}
+		return propertyGeneratorFactory;
+	}
+
+	public void setPropertyGeneratorFactory(PropertyGeneratorFactory propertyGeneratorFactory) {
+		this.propertyGeneratorFactory = propertyGeneratorFactory;
+	}
+
+	public void process(File file) {
+		// this.file = file;
+		compilationUnit = createCompilationUnit(file);
+		type = compilationUnit.getTypes().get(0);
+		clearExistingMethods();
+		importClasses();
+		generateAccessors();
+		writeToFile(compilationUnit.toString(), file);
+	}
+
+	private void clearExistingMethods() {
+		type.getMembers().removeAll(getInstanceMethods());
+	}
+
+	private List<MethodDeclaration> getInstanceMethods() {
+		List<MethodDeclaration> results = new ArrayList<MethodDeclaration>();
+		for (BodyDeclaration member : type.getMembers()) {
+			if (member instanceof MethodDeclaration
+					&& !ModifierSet.isStatic(((MethodDeclaration) member).getModifiers())) {
+				results.add((MethodDeclaration) member);
+			}
+		}
+		return results;
+	}
+
 
 	private void importClasses() {
-		compilationUnit.getImports().add(new ImportDeclaration(new NameExpr("java.util.Collections"), false, false));
+		for (ImportDeclaration each : compilationUnit.getImports()) {
+			if (each.getName().getName().equals("Collections")) {
+				return;
+			}
+		}
+		ImportDeclaration collections = new ImportDeclaration(new NameExpr("java.util.Collections"), false, false);
+		compilationUnit.getImports().add(collections);
 	}
 
 	private CompilationUnit createCompilationUnit(File file) {
-        try {
-            return JavaParser.parse(file);
-        } catch (ParseException ex) {
-            throw new RuntimeException(ex);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
+		try {
+			return JavaParser.parse(file);
+		} catch (ParseException ex) {
+			throw new RuntimeException(ex);
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 
-    private void generateAccessors() {
-    	for (FieldDeclaration field : getFields()) {
-            PropertyGenerator propertyGenerator = getPropertyGeneratorFactory().getGenerator(field);
-            for (MethodDeclaration method : propertyGenerator.generateAccessors(field)) {
-                ASTHelper.addMember((TypeDeclaration) type, method);
-            }
-    	}
-    }
+	private void generateAccessors() {
+		for (FieldDeclaration field : getFields()) {
+			PropertyGenerator propertyGenerator = getPropertyGeneratorFactory().getGenerator(field);
+			for (MethodDeclaration method : propertyGenerator.generateAccessors(field)) {
+				ASTHelper.addMember((TypeDeclaration) type, method);
+			}
+		}
+	}
 
 	private List<FieldDeclaration> getFields() {
 		List<FieldDeclaration> results = new ArrayList<FieldDeclaration>();
@@ -90,15 +113,13 @@ public abstract class AbstractDomainClassGenerator implements DomainClassGenerat
 		return results;
 	}
 
-
 	private void writeToFile(String data, File file) {
 		try {
 			FileUtils.writeStringToFile(file, data);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

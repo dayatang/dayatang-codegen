@@ -17,7 +17,6 @@ import japa.parser.ast.stmt.BlockStmt;
 import japa.parser.ast.stmt.ExpressionStmt;
 import japa.parser.ast.stmt.ReturnStmt;
 import japa.parser.ast.stmt.Statement;
-import japa.parser.ast.type.Type;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,31 +39,26 @@ public class SimplePropertyGenerator implements PropertyGenerator {
     }
 
 	private MethodDeclaration generateGetter(FieldDeclaration field) {
-		String fieldName = field.getVariables().get(0).getId().getName();
-		String methodName = getGetterMethodName(field.getType(), fieldName);
+		String methodName = CodeGenUtils.getGetterMethodName(field);
 		MethodDeclaration result = new MethodDeclaration(ModifierSet.PUBLIC, field.getType(), methodName);
 		//String comments = "\r\n     * 取得" + field.getJavaDoc().getContent() 
 		//		+ "\r\n     * @return " + fieldName + " " + field.getJavaDoc().getContent()
 		//		+ "\r\n     ";
 		//result.setJavaDoc(new JavadocComment(comments));
+		String fieldName = field.getVariables().get(0).getId().getName();
 		Statement returnStmt = new ReturnStmt(new NameExpr(fieldName));
 		result.setBody(new BlockStmt(Arrays.asList(returnStmt)));
 		return result;
 	}
 
-	private String getGetterMethodName(Type type, String fieldName) {
-		String prefix = type.equals(ASTHelper.BOOLEAN_TYPE) ? "is" : "get";
-		return prefix + CodeGenUtils.upperFirstLetter(fieldName);
-	}
-
 	private MethodDeclaration generateSetter(FieldDeclaration field) {
-		String fieldName = field.getVariables().get(0).getId().getName();
-		String methodName = "set" + CodeGenUtils.upperFirstLetter(fieldName);
+		String methodName = CodeGenUtils.getSetterMethodName(field);
 		MethodDeclaration result = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, methodName);
 		//String comments = "\r\n     * 设置" + field.getJavaDoc().getContent() 
 		//		+ "\r\n     * @param " + fieldName + " " +  field.getJavaDoc().getContent()
 		//		+ "\r\n     ";
 		//result.setJavaDoc(new JavadocComment(comments));
+		String fieldName = field.getVariables().get(0).getId().getName();
 		Parameter parameter = ASTHelper.createParameter(field.getType(), fieldName);
 		result.setParameters(Arrays.asList(parameter));
 		AssignExpr assignExpr = new AssignExpr(new FieldAccessExpr(new NameExpr("this"), fieldName), new NameExpr(fieldName),
