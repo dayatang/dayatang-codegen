@@ -9,6 +9,12 @@
     <modules>
         <module>dayatang-codegen-domain</module>
     </modules>
+    
+    <scm>
+        <connection>scm:git:https://github.com/dayatang/dayatang-codegen.git</connection>
+        <developerConnection>scm:git:git@github.com:dayatang/dayatang-codegen.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
     <distributionManagement>
         <repository>
