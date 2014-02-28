@@ -4,11 +4,11 @@
   <parent>
     <groupId>org.dayatang.codegen</groupId>
     <artifactId>dayatang-codegen-project</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
   </parent>
   <groupId>org.dayatang.codegen</groupId>
   <artifactId>dayatang-codegen-domain</artifactId>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <name>dayatang-codegen-domain</name>
   <url>http://maven.apache.org</url>
   <properties>
