@@ -25,7 +25,7 @@ import org.dayatang.codegen.domain.classgen.PropertyGenerator;
 import org.dayatang.codegen.tools.CodeGenUtils;
 import org.dayatang.codegen.tools.Inflector;
 
-public abstract class CollectionPropertyGenerator implements PropertyGenerator {
+public abstract class AbstractCollectionPropertyGenerator implements PropertyGenerator {
 
 	public List<MethodDeclaration> generateAccessors(FieldDeclaration field) {
     	List<MethodDeclaration> results = new ArrayList<MethodDeclaration>();
@@ -38,7 +38,7 @@ public abstract class CollectionPropertyGenerator implements PropertyGenerator {
 
 	private MethodDeclaration generateGetter(FieldDeclaration field) {
 		String fieldName = field.getVariables().get(0).getId().getName();
-		String methodName = "get" + CodeGenUtils.upperFirstLetter(fieldName);
+		String methodName = CodeGenUtils.getGetterMethodName(field);
 		MethodDeclaration result = new MethodDeclaration(ModifierSet.PUBLIC, field.getType(), methodName);
 		Expression arg = new FieldAccessExpr(new ThisExpr(), fieldName);
 		MethodCallExpr callExpr = new MethodCallExpr(new NameExpr("Collections"), getUnmodifiableCloneMethodName(), Collections.singletonList(arg));

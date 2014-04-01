@@ -38,7 +38,7 @@ public abstract class AbstractMapPropertyGenerator implements PropertyGenerator 
 
 	private MethodDeclaration generateGetter(FieldDeclaration field) {
 		String fieldName = field.getVariables().get(0).getId().getName();
-		String methodName = "get" + CodeGenUtils.upperFirstLetter(fieldName);
+		String methodName = CodeGenUtils.getGetterMethodName(field);
 		MethodDeclaration result = new MethodDeclaration(ModifierSet.PUBLIC, field.getType(), methodName);
 		Expression arg = new FieldAccessExpr(new ThisExpr(), fieldName);
 		MethodCallExpr callExpr = new MethodCallExpr(new NameExpr("Collections"), getUnmodifiableCloneMethodName(), Collections.singletonList(arg));
