@@ -10,6 +10,24 @@
         <module>dayatang-codegen-domain</module>
     </modules>
 
+    <distributionManagement>
+        <repository>
+            <id>dayatang-releases</id>
+            <name>Dayatang release repository</name>
+            <url>dav:http://nexus.dayatang.org:8083/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>dayatang-snapshots</id>
+            <name>Dayatang snapshot repository</name>
+            <url>dav:http://nexus.dayatang.org:8083/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <site>
+            <id>dayatang-site</id>
+            <name>Koala maven site</name>
+            <url>dav:http://www.dayatang.org/dddlib</url>
+        </site>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>dayatang-releases</id>
