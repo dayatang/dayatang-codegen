@@ -27,11 +27,6 @@
             <name>Dayatang snapshot repository</name>
             <url>dav:http://nexus.dayatang.org:8083/content/repositories/snapshots</url>
         </snapshotRepository>
-        <site>
-            <id>dayatang-site</id>
-            <name>Koala maven site</name>
-            <url>dav:http://www.dayatang.org/projects/codegen</url>
-        </site>
     </distributionManagement>
 
     <repositories>
